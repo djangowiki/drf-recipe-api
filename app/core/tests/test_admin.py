@@ -13,11 +13,15 @@ class AdminSiteTests(TestCase):
         """Create user and client"""
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
-            email="admin@example.com", name="Example User", password="password123"
+            email="admin@example.com",
+            name="Example User",
+            password="password123",  # noqa
         )
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create_user(
-            email="test@example.com", name="Example User", password="password123"
+            email="test@example.com",
+            name="Example User",
+            password="password123",  # noqa
         )
 
     def test_users_lists(self):
