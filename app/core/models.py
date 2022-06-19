@@ -1,12 +1,22 @@
 """
 Database Models
 """
+import uuid
+import os
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager,
 )
+from django.conf import settings
 from django.db import models
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image"""
+    ext = os.path.splitext(filename)[1]  # extracting the extension from the filename
+    filename = f"{uuid.uuid4()}{ext}"  # creating our own filename and appending the precious extension to the end.
+    return os.path.join("uploads", "recipe", filename)  # os agnostic code.
 
 
 class CustomUserManager(BaseUserManager):
@@ -49,6 +59,45 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Recipe(models.Model):
+    """Create a recipe object"""
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    time_minutes = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    link = models.CharField(max_length=255, blank=True)
+    tags = models.ManyToManyField("Tag")
+    ingredients = models.ManyToManyField("Ingredient")
+    image = models.ImageField(
+        null=True, upload_to=recipe_image_file_path
+    )  # making a reference to our function recipe upload image file path.
+
+    def __str__(self):
+        return self.title
+
+
+class Tag(models.Model):
+    """Tag for filtering recipes"""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient Model for Recipe"""
+
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 # Minimalistic Way of Doing This.
