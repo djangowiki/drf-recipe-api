@@ -1,0 +1,4 @@
+Testing configurations before deployment:
+
+docker-compose -f docker-compose-deploy.yml up
+docker-compose -f docker-compose-deploy.yml down
