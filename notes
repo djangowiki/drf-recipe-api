@@ -2,3 +2,23 @@ Testing configurations before deployment:
 
 docker-compose -f docker-compose-deploy.yml up
 docker-compose -f docker-compose-deploy.yml down
+
+Creating .ssh directory
+mkdir -p ~/.ssh
+
+Generating ssh key
+ssh-keygen -t rsa -b 4096
+
+
+Pub Key:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCw3bEmgMDiaLfCCnVW0Ep726n0UV1k1X2blbxu5WHViBlpb+Kl/BVTV4PupSEQNeS3YCbqa5tv3SHtB+XMfBg/I8pqxtLr2FpJva8gs+QFM/l3VVsCAR0mV7DVKZnQCvGU92NXW1QjpVlR8pPZhMETr5WEXfy1g1xmcoMwcNgPTZBJmgLdFqLRexYNaW5zt1NR6LN9fGyC6WQEfq6jZAyuxKSCJWX64TNjkMgk0t2c0oq2FKUcurj50o4XAsSAV+zn/zNTAI9roX6SPDQEIb2Guzsl+teqmXSWX3NSAUCsMVQPqkMjT+acunNl3Zl7H2VLH969VMJR1jJRmi1yqhdYbj71eFqJg+taWWoBb9C/5bDyJu/jocLp/6l60tkpv2xs28qT9vAn/OfZYr8wkDcNYhHRym1x2+kzLq+6RRBJcTiX0lQGZ3F7xkgBbCIVvjN/I/V72TFE2VVgNtKCaVr+mpBI3Dz6N2bBTZEIYxzzf052c1fg5vE6xDesOedd5Q8WEIAYsLPSljNN4GB3GPxXTRSscWugv39bR3dKsDMHueujHFoXL+Mp99En1F1qk3WIRWqdnRvw4srxhqb5EcxDGB1D0k+bxWmV3W1IvIKl1SZLZIu7GFlC2GjbYXu+XrqxPz/OHwQBu9+ry1BPNR2yqNUiRbrAxDfIhqze/ad8jQ== skoolmedia@Skools-MacBook-Pro.local
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose -f docker-compose-deploy.yml run --rm app sh -c "python manage.py createsuperuser"
+
+docker-compose -f docker-compose-deploy.yml logs
+
+Ssh to Amazon Ec2.
+ssh ec2-user@54.90.94.172
