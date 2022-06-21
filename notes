@@ -22,3 +22,12 @@ docker-compose -f docker-compose-deploy.yml logs
 
 Ssh to Amazon Ec2.
 ssh ec2-user@54.90.94.172
+
+How to Rebuild an App Already Running on the Server.
+docker-compose -f docker-compose-deploy.yml build app
+
+Running the App After Deploying it on Server.
+docker-compose -f docker-compose-deploy.yml up --no-deps -d app
+Means, restart our app but dont restart the depencies.
+
+http://ec2-54-90-94-172.compute-1.amazonaws.com/api/docs/#/recipe/recipe_ingredients_list
