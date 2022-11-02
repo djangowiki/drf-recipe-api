@@ -1,3 +1,3 @@
 # drf-recipe-api
 A DRF Recipe Api 
-![alt text](https://www.awesomescreenshot.com/image/33990281?key=74eb2fdc0c7b3ca7876c6af09c5c5142)
+![Recipe API with Swagger and DRF.](https://www.dailywire.ng/wp-content/uploads/2022/11/Recipe-Api-with-User-Authentication.png)
