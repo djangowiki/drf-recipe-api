@@ -12,6 +12,7 @@ Since we are working with Docker, we don't even need to setup this virtual env o
 
 # Working with Docker
 ![Working with Docker](https://www.memesmonkey.com/images/memesmonkey/ef/ef4435225f1aca10632d610ce506df08.jpeg)
+
 Working with Docker has always made my life easier as a developer. Infact, I am on a holy mission to dockerize all my projects. 😄
 When you clone this repository and run it using my Docker, you can be absolutely sure that the whole environment, dependencies, and dev dependencies are available on your machine. To be honest, they are not actually on your machine, they are all contained in the Docker container, so it doesn't matter what dependencies are avaliable on your machine, just use my Docker image that comes with this project and we are good to go.
 
