@@ -105,7 +105,11 @@ class RecipeDetailSerializer(RecipeSerializer):
 class RecipeImageSerializer(serializers.ModelSerializer):
     """Serializer for uploading images to recipes"""
 
-    # We are creating a separate serializer because uploading images, we dont need the extra fields that is part of the recipe. Again, it is best practice to build an api with one type of data. Not different. That's an API with form data and multipart data which is image. This makes our api data structures clean, and easy to use and understandable.
+    # We are creating a separate serializer because uploading images,
+    #  we dont need the extra fields that is part of the recipe.
+    #  Again, it is best practice to build an api with one type of data. 
+    # Not different. That's an API with form data and multipart data which is image. 
+    # This makes our api data structures clean, and easy to use and understandable.
 
     class Meta:
         model = models.Recipe
