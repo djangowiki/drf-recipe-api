@@ -6,7 +6,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-CREATE_USER_URL = reverse("user:create")
+CREATE_USER_URL = reverse("user:create")  # url for making test request
 CREATE_TOKEN_URL = reverse("user:token")
 ME_URL = reverse("user:me")
 
@@ -16,9 +16,10 @@ ME_URL = reverse("user:me")
 # Create a helper function to createour test users
 
 
-def create_user(**params):
+def create_user(**kwargs):  # this create user takes in kwargs
     """Creates and returns a user"""
-    return get_user_model().objects.create_user(**params)
+    user = get_user_model().objects.create_user(**kwargs)
+    return user
 
 
 # The unauthenticated user tests.
@@ -36,17 +37,21 @@ class PublicUserApiTests(TestCase):
             "password": "testpass123",
             "name": "Test Name",
         }
+
         res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertNotIn(
+            "password", res.data
+        )  # ensures we are not returning the password to the user.
+
         # user = get_user_model().objects.get(
         #     email=payload["email"]
         # )  # check that the user is registered in the database with the correct email
+        # user.refresh_from_db()
+        # print(user)
         # self.assertTrue(
         #     user.check_password(payload["password"])
         # )  # check the user is registered with the correct paasword.
-        # self.assertNotIn(
-        #     "password", res.data
-        # )  # ensures we are not returning the password to the user.
 
     def test_user_with_email_exists_error(self):
         """Test error returned if user with email exists"""
@@ -55,8 +60,10 @@ class PublicUserApiTests(TestCase):
             "password": "testpass123",
             "name": "Test Name",
         }
-        create_user(**payload)
-        res = self.client.post(CREATE_USER_URL, payload)
+        create_user(**payload)  # create a user to the database using a payload
+        res = self.client.post(
+            CREATE_USER_URL, payload
+        )  # make a request to the API using the same payload. This should trigger an error since the user already exists in the database
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_password_too_short_error(self):
